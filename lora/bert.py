@@ -13,7 +13,7 @@ def add_lora_to_bert(model, adapter_rank):
         lora_layer = LoRALinear(
             model.encoder.layer[i].attention.self.query.in_features, 
             model.encoder.layer[i].attention.self.query.out_features, 
-            16
+            adapter_rank
         )
         lora_layer.main.weight.data = model.encoder.layer[i].attention.self.query.weight.data
         if model.encoder.layer[i].attention.self.query.bias != None:
@@ -26,7 +26,7 @@ def add_lora_to_bert(model, adapter_rank):
         lora_layer = LoRALinear(
             model.encoder.layer[i].attention.self.key.in_features, 
             model.encoder.layer[i].attention.self.key.out_features, 
-            16
+            adapter_rank
         )
         lora_layer.main.weight.data = model.encoder.layer[i].attention.self.key.weight.data
         if model.encoder.layer[i].attention.self.key.bias != None:
@@ -39,7 +39,7 @@ def add_lora_to_bert(model, adapter_rank):
         lora_layer = LoRALinear(
             model.encoder.layer[i].attention.self.value.in_features, 
             model.encoder.layer[i].attention.self.value.out_features, 
-            16
+            adapter_rank
         )
         lora_layer.main.weight.data = model.encoder.layer[i].attention.self.value.weight.data
         if model.encoder.layer[i].attention.self.value.bias != None:
