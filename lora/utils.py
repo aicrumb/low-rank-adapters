@@ -9,8 +9,8 @@ class LoRALinear(torch.nn.Module):
         self.lora_down = torch.nn.Linear(out_params, r, bias=False)
         self.lora_up = torch.nn.Linear(r, out_params, bias=False)
 
-        torch.nn.init.normal_(self.lora_down.weight, std=1 / 16)
-        torch.nn.init.zeros_(self.lora_up.weight)
+        #torch.nn.init.normal_(self.lora_down.weight, std=1 / 16)
+        #torch.nn.init.zeros_(self.lora_up.weight)
 
     def forward(self, x):
         x = self.main(x) + self.alpha * self.lora_up(self.lora_down(x))
