@@ -13,7 +13,7 @@ for name, param in model.named_parameters():
         param.requires_grad = True
     else:
         param.requires_grad = False
-        
+
 # train lora layers here however you want
 
 # save the loras

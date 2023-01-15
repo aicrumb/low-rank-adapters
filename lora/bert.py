@@ -11,11 +11,13 @@ def add_lora_to_bert(model, adapter_rank):
     for i in range(len(model.encoder.layer)):
         # replace query
         lora_layer = LoRALinear(
-            model.encoder.layer[i].attention.self.query.in_features, 
-            model.encoder.layer[i].attention.self.query.out_features, 
-            adapter_rank
+            model.encoder.layer[i].attention.self.query.in_features,
+            model.encoder.layer[i].attention.self.query.out_features,
+            adapter_rank,
         )
-        lora_layer.main.weight.data = model.encoder.layer[i].attention.self.query.weight.data
+        lora_layer.main.weight.data = model.encoder.layer[
+            i
+        ].attention.self.query.weight.data
         if model.encoder.layer[i].attention.self.query.bias != None:
             lora_layer.main.bias = model.encoder.layer[i].attention.self.query.bias
         else:
@@ -24,11 +26,13 @@ def add_lora_to_bert(model, adapter_rank):
 
         # replace key
         lora_layer = LoRALinear(
-            model.encoder.layer[i].attention.self.key.in_features, 
-            model.encoder.layer[i].attention.self.key.out_features, 
-            adapter_rank
+            model.encoder.layer[i].attention.self.key.in_features,
+            model.encoder.layer[i].attention.self.key.out_features,
+            adapter_rank,
         )
-        lora_layer.main.weight.data = model.encoder.layer[i].attention.self.key.weight.data
+        lora_layer.main.weight.data = model.encoder.layer[
+            i
+        ].attention.self.key.weight.data
         if model.encoder.layer[i].attention.self.key.bias != None:
             lora_layer.main.bias = model.encoder.layer[i].attention.self.key.bias
         else:
@@ -37,25 +41,29 @@ def add_lora_to_bert(model, adapter_rank):
 
         # replace value
         lora_layer = LoRALinear(
-            model.encoder.layer[i].attention.self.value.in_features, 
-            model.encoder.layer[i].attention.self.value.out_features, 
-            adapter_rank
+            model.encoder.layer[i].attention.self.value.in_features,
+            model.encoder.layer[i].attention.self.value.out_features,
+            adapter_rank,
         )
-        lora_layer.main.weight.data = model.encoder.layer[i].attention.self.value.weight.data
+        lora_layer.main.weight.data = model.encoder.layer[
+            i
+        ].attention.self.value.weight.data
         if model.encoder.layer[i].attention.self.value.bias != None:
             lora_layer.main.bias = model.encoder.layer[i].attention.self.value.bias
         else:
             lora_layer.main.bias = None
         model.encoder.layer[i].attention.self.value = lora_layer
 
+
 # I don't know if these are useful or not but I added them just in case, I don't have many BERT finetuning projects so I can't exactly test them
+
 
 def add_lora_to_bert_output_layers(model, adapter_rank):
     for i in range(len(model.encoder.layer)):
         lora_layer = LoRALinear(
-            model.encoder.layer[i].output.dense.in_features, 
-            model.encoder.layer[i].output.dense.out_features, 
-            adapter_rank
+            model.encoder.layer[i].output.dense.in_features,
+            model.encoder.layer[i].output.dense.out_features,
+            adapter_rank,
         )
 
         lora_layer.main.weight.data = model.encoder.layer[i].output.dense.weight.data
@@ -65,15 +73,18 @@ def add_lora_to_bert_output_layers(model, adapter_rank):
             lora_layer.main.bias = None
         model.encoder.layer[i].output.dense = lora_layer
 
+
 def add_lora_to_bert_attention_output_layers(model, adapter_rank):
     for i in range(len(model.encoder.layer)):
         lora_layer = LoRALinear(
-            model.encoder.layer[i].attention.output.dense.in_features, 
-            model.encoder.layer[i].attention.output.dense.out_features, 
-            adapter_rank
+            model.encoder.layer[i].attention.output.dense.in_features,
+            model.encoder.layer[i].attention.output.dense.out_features,
+            adapter_rank,
         )
 
-        lora_layer.main.weight.data = model.encoder.layer[i].attention.output.dense.weight.data
+        lora_layer.main.weight.data = model.encoder.layer[
+            i
+        ].attention.output.dense.weight.data
         if model.encoder.layer[i].attention.output.dense.bias != None:
             lora_layer.main.bias = model.encoder.layer[i].attention.output.dense.bias
         else:
