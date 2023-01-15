@@ -2,7 +2,8 @@
 
 Rudimentary codebase for adding Low Rank Adapters to transformer models, based on the paper, [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685).
 
-We inject trainable rank decomposition matrices into layers of the transformer. If a model is to large to train this is a well-performing alternative.
+We inject trainable rank decomposition matrices into layers of the transformer. If a model is to large to train this is a well-performing alternative. (This results in a sharable ~3.4MB file for the base BERT models).
+---
 
 ### BibTeX
 ```
@@ -25,4 +26,4 @@ We inject trainable rank decomposition matrices into layers of the transformer. 
   biburl    = {https://dblp.org/rec/journals/corr/abs-2106-09685.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
-```"# low-rank-adapters" 
+```
