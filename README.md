@@ -6,7 +6,7 @@ We inject trainable rank decomposition matrices into layers of the transformer. 
 
 Current models supported:
 - BERT
-- GPT-Neo
+- GPT-Neo / GPT-J
 
 ### Usage:
 

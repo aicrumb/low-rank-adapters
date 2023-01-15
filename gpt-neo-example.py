@@ -8,7 +8,12 @@ tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/tiny-random-gpt_n
 
 # add low rank adapters
 add_lora_to_gpt_neo(model, 16)
-
+for name, param in model.named_parameters():
+    if "lora" in name:
+        param.requires_grad = True
+    else:
+        param.requires_grad = False
+        
 # train lora layers here however you want
 
 # save the loras
