@@ -10,22 +10,46 @@ from .utils import LoRALinear
 # so I'll leave this as the base name add_lora_to_bert because I'm assuming it's the standard
 def add_lora_to_bert(model, adapter_rank):
     for i in range(len(model.encoder.layer)):
-        layers_to_replace = []
-        layers_to_replace.append(model.encoder.layer[i].attention.self.query)
-        layers_to_replace.append(model.encoder.layer[i].attention.self.key)
-        layers_to_replace.append(model.encoder.layer[i].attention.self.value)
-        for layer in layers_to_replace:
-            lora_layer = LoRALinear(
-                layer.in_features, 
-                layer.out_features, 
-                adapter_rank
-            )
-            lora_layer.main.weight.data = layer.weight.data
-            if layer.bias != None:
-                lora_layer.main.bias = layer.bias
-            else:
-                lora_layer.main.bias = None
-            layer = lora_layer
+        # replace query
+        lora_layer = LoRALinear(
+            model.encoder.layer[i].attention.self.query.in_features, 
+            model.encoder.layer[i].attention.self.query.out_features, 
+            16
+        )
+        lora_layer.main.weight.data = model.encoder.layer[i].attention.self.query.weight.data
+        if model.encoder.layer[i].attention.self.query.bias != None:
+            lora_layer.main.bias = model.encoder.layer[i].attention.self.query.bias
+        else:
+            lora_layer.main.bias = None
+        model.encoder.layer[i].attention.self.query = lora_layer
+
+        # replace key
+        lora_layer = LoRALinear(
+            model.encoder.layer[i].attention.self.key.in_features, 
+            model.encoder.layer[i].attention.self.key.out_features, 
+            16
+        )
+        lora_layer.main.weight.data = model.encoder.layer[i].attention.self.key.weight.data
+        if model.encoder.layer[i].attention.self.key.bias != None:
+            lora_layer.main.bias = model.encoder.layer[i].attention.self.key.bias
+        else:
+            lora_layer.main.bias = None
+        model.encoder.layer[i].attention.self.key = lora_layer
+
+        # replace value
+        lora_layer = LoRALinear(
+            model.encoder.layer[i].attention.self.value.in_features, 
+            model.encoder.layer[i].attention.self.value.out_features, 
+            16
+        )
+        lora_layer.main.weight.data = model.encoder.layer[i].attention.self.value.weight.data
+        if model.encoder.layer[i].attention.self.value.bias != None:
+            lora_layer.main.bias = model.encoder.layer[i].attention.self.value.bias
+        else:
+            lora_layer.main.bias = None
+        model.encoder.layer[i].attention.self.value = lora_layer
+
+        
 
 def add_lora_to_bert_output_layers(model, adapter_rank):
     for i in range(len(model.encoder.layer)):
