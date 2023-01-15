@@ -7,6 +7,10 @@ We inject trainable rank decomposition matrices into layers of the transformer. 
 Current models supported:
 - BERT
 
+### Usage:
+
+Check any file labeled `-example` for an example usage of this code.
+
 ### BibTeX
 ```
 @article{DBLP:journals/corr/abs-2106-09685,

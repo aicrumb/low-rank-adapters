@@ -20,10 +20,10 @@ for name, param in model.named_parameters():
 # train lora layers here however you want
 
 # save the loras
-save_lora_layers(model, "bert_finetuned_lora_layers.pt")
+save_lora_layers(model, "bert_finetuned_lora_layers.lora")
 
 # re-load bert and loras
 model_id = "bert-base-uncased"
 model = AutoModel.from_pretrained(model_id)
 add_lora_to_bert(model, 16)
-load_lora_layers(model, "bert_finetuned_lora_layers.pt")
+load_lora_layers(model, "bert_finetuned_lora_layers.lora")
