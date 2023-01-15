@@ -3,14 +3,16 @@ import torch
 from .utils import LoRALinear
 
 
-def add_lora_to_bert(model, adapter_rank):
+def add_lora_to_bert(
+    model, adapter_rank, device="cuda" if torch.cuda.is_available() else "cpu"
+):
     for i in range(len(model.encoder.layer)):
         # replace query
         lora_layer = LoRALinear(
             model.encoder.layer[i].attention.self.query.in_features,
             model.encoder.layer[i].attention.self.query.out_features,
             adapter_rank,
-        )
+        ).to(device)
         lora_layer.main.weight.data = model.encoder.layer[
             i
         ].attention.self.query.weight.data
@@ -25,7 +27,7 @@ def add_lora_to_bert(model, adapter_rank):
             model.encoder.layer[i].attention.self.key.in_features,
             model.encoder.layer[i].attention.self.key.out_features,
             adapter_rank,
-        )
+        ).to(device)
         lora_layer.main.weight.data = model.encoder.layer[
             i
         ].attention.self.key.weight.data
@@ -40,7 +42,7 @@ def add_lora_to_bert(model, adapter_rank):
             model.encoder.layer[i].attention.self.value.in_features,
             model.encoder.layer[i].attention.self.value.out_features,
             adapter_rank,
-        )
+        ).to(device)
         lora_layer.main.weight.data = model.encoder.layer[
             i
         ].attention.self.value.weight.data

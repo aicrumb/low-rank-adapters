@@ -8,7 +8,7 @@ model = AutoModelForCausalLM.from_pretrained("hf-internal-testing/tiny-random-gp
 tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/tiny-random-gpt_neo")
 
 # add low rank adapters
-add_lora_to_gpt_neo(model, 16)
+add_lora_to_gpt_neo(model, 16, device=model.device)
 for name, param in model.named_parameters():
     if "lora" in name:
         param.requires_grad = True
@@ -22,5 +22,5 @@ save_lora_layers(model, "gpt-neo-finetuned-lora-layers.lora")
 
 # test load the loras back in
 model = AutoModelForCausalLM.from_pretrained("hf-internal-testing/tiny-random-gpt_neo")
-add_lora_to_gpt_neo(model, 16)
+add_lora_to_gpt_neo(model, 16, device=model.device)
 load_lora_layers(model, "gpt-neo-finetuned-lora-layers.lora")
