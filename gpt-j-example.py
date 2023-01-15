@@ -1,6 +1,7 @@
-from lora.gpt_j import add_lora_to_gpt_j
-from lora import save_lora_layers, load_lora_layers
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+from lora import load_lora_layers, save_lora_layers
+from lora.gpt_j import add_lora_to_gpt_j
 
 # load a gpt neo model
 model = AutoModelForCausalLM.from_pretrained("anton-l/gpt-j-tiny-random")

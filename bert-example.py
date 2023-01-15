@@ -1,8 +1,8 @@
-from lora.bert import add_lora_to_bert
-from lora import save_lora_layers, load_lora_layers
-
-from transformers import AutoModel, AutoTokenizer
 import torch
+from transformers import AutoModel, AutoTokenizer
+
+from lora import load_lora_layers, save_lora_layers
+from lora.bert import add_lora_to_bert
 
 # load the base bert model
 model_id = "bert-base-uncased"
